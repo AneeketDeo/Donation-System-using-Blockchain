@@ -2,39 +2,44 @@
 //one change for new branch
 pragma solidity >=0.6.0 < 0.9.0;
 
+// contract Authentication {
+//     mapping(address => bool) public authorized;
+
+//     function authorize(address _address) public {
+//         authorized[_address] = true;
+//     }
+
+//     function revoke(address _address) public {
+//         authorized[_address] = false;
+//     }
+
+//     function isAuthorized(address _address) public view returns (bool) {
+//         return authorized[_address];
+//     }
+// }
+
+// -------------------------------Authentication 2------------------------------//
+// comapring passwords too!
+
+
+
 contract Authentication {
-    uint256 public nbOfUsers;
-
     struct User {
-        string signatureHash;
-        address userAddress;
+        address uaddress;
+        bytes32 email;
+        bytes32 passwordHash;
     }
 
-    mapping(address => User) private user;
+    mapping (address => User) public users;
 
-    constructor() {
-        nbOfUsers = 0;
+    function register(address uaddress, bytes32 email, bytes32 password) public {
+        bytes32 passwordHash = sha256(abi.encodePacked(password));
+        users[msg.sender] = User(uaddress, email, passwordHash);
     }
 
-    function register(string memory _signature) public {
-        require(
-            user[msg.sender].userAddress ==
-                address(0x0000000000000000000000000000000000000000),
-            "already registered"
-        );
-
-        user[msg.sender].signatureHash = _signature;
-        user[msg.sender].userAddress = msg.sender;
-        nbOfUsers++;
-    }
-
-    function getSignatureHash() public view returns (string memory) {
-        require(msg.sender == user[msg.sender].userAddress, "Not allowed");
-
-        return user[msg.sender].signatureHash;
-    }
-
-    function getUserAddress() public view returns (address) {
-        return user[msg.sender].userAddress;
+    function verifyCredentials(address vaddress, bytes32 email, bytes32 password) public view returns (bool) {
+        bytes32 hashedPassword = sha256(abi.encodePacked(password));
+        return users[msg.sender].uaddress == vaddress && users[msg.sender].email == email && users[msg.sender].passwordHash == hashedPassword;
     }
 }
+

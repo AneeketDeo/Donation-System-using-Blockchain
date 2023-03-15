@@ -44,232 +44,128 @@
 </head>
 <body>
   <script>
-    // var web3;
     if (typeof web3 !== 'undefined') {
       web3 = new Web3(web3.currentProvider);
+      // alert(web3);
     } else {
       // set the provider you want from Web3.providers
       web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+      // alert(web3);
     }
 
 
 
-    const contractAbi =[
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "users",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "uaddress",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "email",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "passwordHash",
-          "type": "bytes32"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "uaddress",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "email",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "password",
-          "type": "bytes32"
-        }
-      ],
-      "name": "register",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "vaddress",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "email",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "password",
-          "type": "bytes32"
-        }
-      ],
-      "name": "verifyCredentials",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    }
-  ];
+      const contractAbi =[    
+      {
+            "inputs": [
+              {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+              }
+            ],
+            "name": "users",
+            "outputs": [
+              {
+                "internalType": "bytes32",
+                "name": "",
+                "type": "bytes32"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function",
+            "constant": true
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "string",
+                "name": "_email",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "_password",
+                "type": "string"
+              }
+            ],
+            "name": "register",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "string",
+                "name": "_email",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "_password",
+                "type": "string"
+              }
+            ],
+            "name": "login",
+            "outputs": [
+              {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function",
+            "constant": true
+          }
+      ];
 
-  const contractAddress = "0xD65E959738b9534C301055e1a5DF1Dae68383d79";
-  const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
+    const contractAddress = "0x8E055bF7C9867Dbf66D7096C35b6ABe2FF425005";
+    const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
+    function register(){
+      const name = document.getElementById("name").value
+      const email = document.getElementById("email").value
+      const pass1 = document.getElementById("pass1").value
+      const pass2 = document.getElementById("pass2").value
+      if ( name === "" && email === "" && pass1 === "" && pass2 === ""){
+        alert("Please Enter All Details");
 
-  function register(){
-    const name = document.getElementById("name").value
-    const email = document.getElementById("email").value
-    const pass1 = document.getElementById("pass1").value
-    const pass2 = document.getElementById("pass2").value
-    if ( name === "" && email === "" && pass1 === "" && pass2 === ""){
-      alert("Please Enter All Details");
+      }
+      else{
+        // console.log("inside log");
+        web3.eth.getAccounts().then(function(accounts) {
+            console.log("Current account:", accounts[0]);
+            
+            // CONTRACT #1
+            // contractInstance.methods.authorize(accounts[0]).send({from: accounts[0]}).then((result) => {
+            // CONTRACT #2
+            // contractInstance.methods.register(accounts[0], email, pass1).send({from: accounts[0]}).then((result) => {
+            
+            // CONTRACT #4
+            // contractInstance.methods.registerUser(accounts[0], email, pass1).send({from: accounts[0]}).then((result) => {
+            //   console.log("registered", result);
+            // }).catch((error) => {
+            //   console.error(error);
+            // });
 
-    }
-    else{
-      web3.eth.getAccounts().then(function(accounts) {
-          console.log("Current account:", accounts[0]);
-          // Do something with the account
-            // Call a contract method
-          contractInstance.methods.register(accounts[0], pass1).send({from: accounts[0]}).then((result) => {
-            // console.log("Current value:", authorized);
-          }).catch((error) => {
+            // CONTRACT #5
+            contractInstance.methods.register(email, pass1).send({from: accounts[0]}).then((result) => {
+              console.log("registered", result);
+            }).catch((error) => {
+              console.error(error);
+            });
+
+            
+        }).catch(function(error) {
             console.error(error);
           });
-      }).catch(function(error) {
-          console.error(error);
-        });
-    
-    }
+      
+      }
   }
-
+    
   </script>
 
-<!-- <script>
-  // var web3;
-  if (typeof web3 !== 'undefined') {
-    web3 = new Web3(web3.currentProvider);
-  } else {
-    // set the provider you want from Web3.providers
-    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
-  }
-
-
-
-  const contractAbi2 = [
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "newValue",
-          "type": "uint256"
-        }
-      ],
-      "name": "setTheInt",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getTheInt",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "getTheInt2",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    }
-  ];
-
-  const contractAddress2 = "0xDF44559660958335d5E00A2CaD053ED1752A9B5E";
-  const contractInstance2 = new web3.eth.Contract(contractAbi2, contractAddress2);
-
-  // try using send(), then callback()
-  web3.eth.getAccounts().then(function(accounts) {
-
-    contractInstance2.methods.setTheInt(345).send({from: accounts[0]}).then((result) => {
-        console.log("int stored!", result);
-    }).catch((error) => {
-        console.error(error);
-    });
-  }).catch(function(error) {
-      console.error(error);
-    });
-
-  contractInstance2.methods.getTheInt().call().then((result) => {
-      console.log("int retrieved=", result);
-  }).catch((error) => {
-        console.error(error);
-  });
-
-  contractInstance2.methods.getTheInt2().call().then((result) => {
-      console.log("int2 retrieved=", result);
-  }).catch((error) => {
-      console.error(error);
-  });
-
-  
-
-
-  
-
-
-
-
-  // var authentication = Authentication.at("0x32CDCc0a18A4AEACFa39e0378229d2687e69EC5b");
-
-
-  // web3.eth.defaultAccount = web3.eth.accounts[0];
-
-  // authentication.authorize(web3.eth.defaultAccount)
-  // console.log("authorized list", authentication.authorized)
-
-</script> -->
   <section class="vh-100" style="background-color: rgb(60,199,143);">
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -281,7 +177,7 @@
   
                   <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
   
-                  <form class="mx-1 mx-md-4" action = "ProjectLogin.html">
+                  <form class="mx-1 mx-md-4" action="">
   
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fa fa-user fa-lg me-3 fa-fw"></i>
@@ -322,7 +218,7 @@
                     </div>
   
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <button type="submit" class="btn btn-primary btn-lg" onClick="register()">Register</button>
+                      <button type="button" id="register_btn" class="btn btn-primary btn-lg" onClick="register()">Register</button>
                     </div>
   
                   </form>

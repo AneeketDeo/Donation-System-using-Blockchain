@@ -25,103 +25,85 @@
     <script>
       if (typeof web3 !== 'undefined') {
         web3 = new Web3(web3.currentProvider);
+        // alert(web3);
       } else {
         // set the provider you want from Web3.providers
         web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+        // alert(web3);
       }
 
 
-
+      // contract details for interacting with smart contract
         const contractAbi =[
-      {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "users",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "uaddress",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "email",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "passwordHash",
-          "type": "bytes32"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "uaddress",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "email",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "password",
-          "type": "bytes32"
-        }
-      ],
-      "name": "register",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "vaddress",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "email",
-          "type": "bytes32"
-        },
-        {
-          "internalType": "bytes32",
-          "name": "password",
-          "type": "bytes32"
-        }
-      ],
-      "name": "verifyCredentials",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    }
-  ];
-
-      const contractAddress = "0xD65E959738b9534C301055e1a5DF1Dae68383d79";
+          {
+            "inputs": [
+              {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+              }
+            ],
+            "name": "users",
+            "outputs": [
+              {
+                "internalType": "bytes32",
+                "name": "",
+                "type": "bytes32"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function",
+            "constant": true
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "string",
+                "name": "_email",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "_password",
+                "type": "string"
+              }
+            ],
+            "name": "register",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "string",
+                "name": "_email",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "_password",
+                "type": "string"
+              }
+            ],
+            "name": "login",
+            "outputs": [
+              {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function",
+            "constant": true
+          }
+        ];
+      
+      const contractAddress = "0x8E055bF7C9867Dbf66D7096C35b6ABe2FF425005";
       const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
+
       function login(){
-        // alert("inside login");
         const email = document.getElementById("email").value
         const pass = document.getElementById("pass").value
         if (email === "" && pass === ""){
@@ -132,15 +114,13 @@
           web3.eth.getAccounts().then(function(accounts) {
             console.log("Current account:", accounts[0]);
             // Do something with the account
-            contractInstance.methods.verifyCredentials(accounts[0], email, pass).call().then((result) => {
+            contractInstance.methods.login(email, pass).call({from: accounts[0]}).then((result) => {
                 console.log("is authorized", result);
-                if(result){
-                  console.log("passwords match!");
-                  // Load a new page when a button is clicked
-                  document.getElementById("login_btn").addEventListener("click", function() {
-                    location.href = "index.html";
-                  });
 
+                // if login successful redirect to index and print login successfull
+                if(result){
+                  window.location = "index.html";
+                  console.log("login successful");
                 }
             }).catch((error) => {
                 console.error(error);

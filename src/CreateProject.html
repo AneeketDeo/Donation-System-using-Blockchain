@@ -10,6 +10,7 @@
     <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
 <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
 <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
@@ -101,6 +102,125 @@ margin-left: 4px;
     </style>
 </head>
 <body>
+    <script>
+        if (typeof web3 !== 'undefined') {
+          web3 = new Web3(web3.currentProvider);
+          // alert(web3);
+        } else {
+          // set the provider you want from Web3.providers
+          web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+          // alert(web3);
+        }
+    
+    
+        // contract details for interacting with smart contract
+          const contractAbi =[
+            {
+            "inputs": [
+                {
+                "internalType": "string",
+                "name": "_title",
+                "type": "string"
+                },
+                {
+                "internalType": "string",
+                "name": "_description",
+                "type": "string"
+                },
+                {
+                "internalType": "string",
+                "name": "_startDate",
+                "type": "string"
+                },
+                {
+                "internalType": "string",
+                "name": "_endDate",
+                "type": "string"
+                },
+                {
+                "internalType": "uint256",
+                "name": "_amountToBeRaised",
+                "type": "uint256"
+                }
+            ],
+            "name": "createProject",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+            },
+            {
+            "inputs": [],
+            "name": "getProjectDetails",
+            "outputs": [
+                {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+                },
+                {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+                },
+                {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+                },
+                {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+                },
+                {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function",
+            "constant": true
+            }
+        ];
+        
+        const contractAddress = "0xa1cb5579Dc77A47C8e70A9C6642485C1a0e57A25";
+        const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
+    
+        function Store_data(){
+          const title = document.getElementById("title").value
+          const description= document.getElementById("description").value
+          const start = document.getElementById("start").value
+          const end = document.getElementById("end").value
+          const amount = document.getElementById("amount").value
+          if (title === "" && description === "" && start === "" && end === "" && amount === ""){
+            alert("Please Enter All Details");
+    
+          }
+          else{
+            web3.eth.getAccounts().then(function(accounts) {
+              console.log("Current account:", accounts[0]);
+              // Do something with the account
+              contractInstance.methods.createProject(title, description, start, end, amount).send({from: accounts[0]}).then((result) => {
+                  console.log("results stored", result);
+    
+                //   if login successful redirect to index and print login successfull
+                  if(result){
+                    window.location = "ProjectOwner.html";
+                  }
+                  else{
+                    console.log("invalid data");
+                  }
+              }).catch((error) => {
+                  console.error(error);
+              });
+            }).catch(function(error) {
+              console.error(error);
+            });
+          }
+        }
+        
+      </script>
     <div class="container">
         <div class="d-flex justify-content-center h-100">
             <div class="card">
@@ -113,14 +233,14 @@ margin-left: 4px;
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder=" Project Title">
+                            <input type="text" id="title" class="form-control" placeholder=" Project Title">
                             
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <textarea name="textarea" class="form-control" cols="1" rows="1" placeholder="Project Description"></textarea>
+                            <textarea name="textarea" id="description" class="form-control" cols="1" rows="1" placeholder="Project Description"></textarea>
                             <!-- <input type="textarea" class="form-control" placeholder="Project Details"> -->
                         </div>
                         <!-- <div class="input-group form-group">
@@ -139,23 +259,23 @@ margin-left: 4px;
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                             </div>
-                            <input type="Start date" class="form-control" placeholder="start date">
+                            <input type="date" id="start" class="form-control" placeholder="Start date">
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                             </div>
-                            <input type=" End date" class="form-control" placeholder="End date">
+                            <input type="date" id="end" class="form-control" placeholder="End date">
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-money-bill"></i></span>
                             </div>
-                            <input type="number" class="form-control" placeholder="How Much Do You Want To Raise?">
+                            <input type="number" id="amount" class="form-control" placeholder="How Much Do You Want To Raise?">
                         </div>
                         
                         <div class="form-group">
-                            <input type="submit" value="submit" class="btn float-left login_btn">
+                            <input type="button" value="submit" onclick = "Store_data()" class="btn float-left login_btn">
                         </div>
                     </form>
                 </div>

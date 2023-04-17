@@ -25,12 +25,95 @@
     <link rel="stylesheet" href="css/slicknav.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+
+    <!-- web3 js -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
 </head>
 
 <body>
-    <!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
+    <script>
+        if (typeof web3 !== 'undefined') {
+          web3 = new Web3(web3.currentProvider);
+          // alert(web3);
+        } else {
+          // set the provider you want from Web3.providers
+          web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+          // alert(web3);
+        }
+  
+  
+        // contract details for interacting with smart contract
+          const contractAbi =[
+            {
+            "inputs": [],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+            },
+            {
+            "inputs": [],
+            "name": "admin",
+            "outputs": [
+                {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function",
+            "constant": true
+            },
+            {
+            "inputs": [],
+            "name": "loginAsAdmin",
+            "outputs": [
+                {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function",
+            "constant": true
+            },
+            {
+            "inputs": [],
+            "name": "performAdminOnlyAction",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+            }
+        ];
+        
+        const contractAddress = "0x15205bfeAB9Be1a540Da29eeF187EAc30a1c77Fc";
+        const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
+  
+        function isAdmin(){
+          
+            web3.eth.getAccounts().then(function(accounts) {
+              console.log("Current account:", accounts[0]);
+              // Do something with the account
+              contractInstance.methods.loginAsAdmin().call({from: accounts[0]}).then((result) => {
+                  console.log("is authorized", result);
+  
+                //   if login successful redirect to index and print login successfull
+                  if(result){
+                    window.location = "Admin.html";
+                    console.log("login successful");
+                  }
+                //   else{
+                //     document.getElementById("invalid_msg").innerHTML = "Invalid Credentials";
+                //   }
+              }).catch((error) => {
+                  console.error(error);
+              });
+            }).catch(function(error) {
+              console.error(error);
+            });
+          }
+        
+      </script>
 
 
     <!-- header-start -->
@@ -88,7 +171,7 @@
                                             <ul class="submenu">
                                                 <li><a href="ProjectLogin.html">Project Owner</a></li>
                                                 <li><a href="BackerLogin.html">Backer</a></li>
-                                                <li><a href="AdminLogin.html">Admin</a></li>
+                                                <li onclick="isAdmin()"><a>Admin</a></li>
                                             </ul>
                                         </li>
                                     </ul>

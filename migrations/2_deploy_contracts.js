@@ -1,11 +1,14 @@
 var funding = artifacts.require("./funding.sol");
-var authentication = artifacts.require("./Authentication.sol");
-var demo = artifacts.require("./demo.sol");
+var ProjectOwnerLogin = artifacts.require("./ProjectOwnerLogin.sol");
+var BackerLogin = artifacts.require("./BackerLogin.sol");
+var AdminLogin = artifacts.require("./AdminLogin.sol");
+
 
 module.exports = function(deployer) {
   deployer.deploy(funding, 1000,3600);
-  deployer.deploy(authentication);
-  deployer.deploy(demo);
+  deployer.deploy(ProjectOwnerLogin);
+  deployer.deploy(BackerLogin);
+  deployer.deploy(AdminLogin);
 };
 
 // module.exports = function(deployer) {

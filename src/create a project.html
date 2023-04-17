@@ -15,6 +15,10 @@
     .navbar-nav {
         padding-left: 50px;
     } 
+    .nocontent {
+      text-align: center;
+      margin-top: 250px;
+    }
   </style>
 </head>
 <body>
@@ -36,11 +40,11 @@
                 <a class="nav-link" href="#" style="margin-left: 10px;">My Projects</a>
               </li>
             </ul>
-            <form class="d-flex" role="search">
+            <!-- <form class="d-flex" role="search"> -->
               <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
               <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
-              <i class="fab fa-search" aria-hidden="true" style="margin-left: 10px;">Search</i>
-            </form>
+              <!-- <i class="fab fa-search" aria-hidden="true" style="margin-left: 10px;">Search</i>
+            </form> -->
             <a href="./Fundraising for projects.html"><button type="button" class="btn " style="margin-inline-start: 200px; background-color:  rgb(171, 206, 236) ; "> Create a Project</button></a>
             <button type="button" class="btn " style="margin-inline-start: 30px; background-color: rgb(171, 206, 236);">Log out</button>
           </div>
@@ -83,8 +87,15 @@
                 </form>
       
               </div> -->
+              <div class="nocontent">
+              <h2>Sorry!</h2>
+              <h2>No projects found</h2>
+
+              <a href="./Fundraising for projects.html"><button type="button" id="primary" class="btn btn-primary m-1" >Create a Project</button></a>
+              </div>
 
 
+       
       
             </div>
             <div class="col-sm-6 px-0 d-none d-sm-block">

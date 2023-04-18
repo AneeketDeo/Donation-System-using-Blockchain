@@ -139,7 +139,7 @@ margin-left: 4px;
                 },
                 {
                 "internalType": "uint256",
-                "name": "_amountToBeRaised",
+                "name": "_amountToRaise",
                 "type": "uint256"
                 }
             ],
@@ -153,29 +153,36 @@ margin-left: 4px;
             "name": "getProjectDetails",
             "outputs": [
                 {
-                "internalType": "string",
+                "components": [
+                    {
+                    "internalType": "string",
+                    "name": "title",
+                    "type": "string"
+                    },
+                    {
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                    },
+                    {
+                    "internalType": "string",
+                    "name": "startDate",
+                    "type": "string"
+                    },
+                    {
+                    "internalType": "string",
+                    "name": "endDate",
+                    "type": "string"
+                    },
+                    {
+                    "internalType": "uint256",
+                    "name": "amountToRaise",
+                    "type": "uint256"
+                    }
+                ],
+                "internalType": "struct ProjectDetails.Project[]",
                 "name": "",
-                "type": "string"
-                },
-                {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-                },
-                {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-                },
-                {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-                },
-                {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
+                "type": "tuple[]"
                 }
             ],
             "stateMutability": "view",
@@ -184,7 +191,7 @@ margin-left: 4px;
             }
         ];
         
-        const contractAddress = "0xa1cb5579Dc77A47C8e70A9C6642485C1a0e57A25";
+        const contractAddress = "0x342A7D0b90855ABDd1df91f3DeB11302496d1203";
         const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
     
         function Store_data(){

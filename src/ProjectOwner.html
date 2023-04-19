@@ -29,22 +29,57 @@
     .navbar-nav {
         padding-left: 50px;
     } 
-    .card {
+    /* .card {
             overflow-y: scroll;
-            height: 300px;
+            height: 30px;
             padding: 1rem;
             border-radius: 10px;
+            display: inline-block;
+            margin: 10px;
 
-            /* my changes */
-            /* width: 18rem;
-            margin-top: 50px; */
-
-        }
-        .card-button {
+         } */
+        /* .card-button {
           justify-content: space-between;
           align-items: center;
           margin-top: 10px;
           
+        } */
+        /* .container {
+          border-radius: 10px; 
+          block-size: 13cm;
+          background-color: rgb(158, 190, 225);
+          background-position: 700cm; 
+          margin-top: 30px;
+
+        } */
+        .container {
+          overflow-y: scroll;
+        }
+        .card-body {
+          background-color: rgb(55, 245, 235);
+          column-width: 200px;
+          display: inline-block;
+          margin: 30px;
+          /* overflow-y: scroll; */
+          border-radius: 10px;
+          text-align: center;
+          height: auto;
+        }
+        .h5 {
+          text-align: center;
+        }
+        .Description {
+          color: brown;
+          
+        }
+        .card-title {
+          font-size: larger;
+          font-weight: bolder;
+          padding: top 20px;
+        }
+        button {
+          margin-bottom: 20px;
+          margin-left: 10px;
         }
   </style>
 
@@ -135,6 +170,7 @@
       "type": "function",
       "constant": true
     }
+    
   ];
   
   const contractAddress = "0x342A7D0b90855ABDd1df91f3DeB11302496d1203";
@@ -146,7 +182,9 @@
       // const cardElement = document.createElement("div");
 
       // cardElement.innerHTML = `
-      //           <h5> Hola Projects here! </h5>
+      //           <h5> Hola Projects here! </h5> {
+          // text-align: center;
+        // }
       //         `;
 
       // cardContainer.appendChild(cardElement);
@@ -177,8 +215,11 @@
               cardElement.className = "card"; // Apply CSS class for card styling
 
               // card body
-              // const cardBody = document.createElement("div");
-              // cardElement.className = "card-body";
+              const cardBody = document.createElement("div");
+              cardElement.className = "card-body";
+
+              // const cardtitle = document.createElement("div");
+              // cardElement.className = "card-title";
 
               // // card buttons
               // const cardButton = document.createElement("div");
@@ -199,16 +240,33 @@
               // `;
 
               cardElement.innerHTML = `
-                <h5>${result[i].title}</h5>
-                <p>${result[i].description}</p>
-                <p>${result[i].startDate}</p>
-                <p>${result[i].endDate}</p>
-                <p>${result[i].amountToRaise}</p>
-              `;
+              <div class="container">
+                
+                
+                <div class="card-content">
+                <h5 class="card-title">${result[i].title}</h5>
+                <p class="card-text">${result[i].description}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                <p class="date">${result[i].startDate}</p>
+                <p class="date">${result[i].endDate}</p>
+                <p class="amount">${result[i].amountToRaise}</p>
+                </ul>
+                <div class="card-button">
+                <button type="button" class="btn btn-success"><a>Know More</a></button>
+                <button type="button" class="btn btn-danger"><a>Abort Project</a></button>
+                </div>
+                </div>
+              `;  
 
               // // Append the card element to the card container
               // cardElement.appendChild(cardBody);
+              // card.classList.add('card');
               cardContainer.appendChild(cardElement);
+
+              // card.style.backgroundColor = 'white';
+              // card.style.borderRadius = '10px';
+              // card.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
             }
           }
 

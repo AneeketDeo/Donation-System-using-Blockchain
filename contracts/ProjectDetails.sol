@@ -23,7 +23,7 @@ pragma solidity >=0.6.0 < 0.9.0;
 //     ) public {
 //         require(bytes(_title).length > 0, "Title is required");
 //         require(bytes(_description).length > 0, "Description is required");
-//         require(bytes(_startDate).length > 0, "Start date is required");
+//         require(bytes(_startDate).length > 0, "Start date iitems required");
 //         require(bytes(_endDate).length > 0, "End date must be greater than start date");
 //         require(_amountToBeRaised > 0, "Amount to be raised must be greater than zero");
 

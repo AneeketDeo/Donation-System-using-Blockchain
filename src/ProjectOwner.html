@@ -130,6 +130,38 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string[]",
+          "name": "_milestones",
+          "type": "string[]"
+        }
+      ],
+      "name": "setMilestones",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getCurrentProjectId",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
       "inputs": [],
       "name": "getProjectDetails",
       "outputs": [
@@ -159,6 +191,11 @@
               "internalType": "uint256",
               "name": "amountToRaise",
               "type": "uint256"
+            },
+            {
+              "internalType": "string[]",
+              "name": "milestones",
+              "type": "string[]"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -170,10 +207,9 @@
       "type": "function",
       "constant": true
     }
-    
   ];
   
-  const contractAddress = "0x342A7D0b90855ABDd1df91f3DeB11302496d1203";
+  const contractAddress = "0xb443F7D431F140F7144087f3Ce2B4BE781EDc7Cb";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
   async function get_projects() {
@@ -252,9 +288,15 @@
                 <p class="date">${result[i].endDate}</p>
                 <p class="amount">${result[i].amountToRaise}</p>
                 </ul>
+                <ul class="list-group list-group-flush">
+                <p class="date">${result[i].milestones[0]}</p>
+                <p class="date">${result[i].milestones[1]}</p>
+                <p class="date">${result[i].milestones[2]}</p>
+                </ul>
                 <div class="card-button">
                 <button type="button" class="btn btn-success"><a>Know More</a></button>
                 <button type="button" class="btn btn-danger"><a>Abort Project</a></button>
+                <button type="button" class="btn btn-primary"><a href="setmilestones.html">Set Milestones</a></button>
                 </div>
                 </div>
               `;  

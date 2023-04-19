@@ -55,6 +55,7 @@ contract ProjectDetails {
         string startDate;
         string endDate;
         uint256 amountToRaise;
+        string[] milestones;
     }
 
     mapping(uint256 => address) private projectOwners;
@@ -64,10 +65,20 @@ contract ProjectDetails {
 
     function createProject(string memory _title, string memory _description, string memory _startDate, string memory _endDate, uint256 _amountToRaise) public {
         uint256 projectId = projects.length;
-        projects.push(Project(_title, _description, _startDate, _endDate, _amountToRaise));
+        projects.push(Project(_title, _description, _startDate, _endDate, _amountToRaise, new string[](0)));
         projectOwners[projectId] = msg.sender;
         projectsByOwner[msg.sender].push(projectId);
     }
+
+    function setMilestones(uint256 _projectId, string[] memory _milestones) public {
+        require(projectOwners[_projectId] == msg.sender, "Only project owner can set milestones.");
+        projects[_projectId].milestones = _milestones;
+    }
+
+    function getCurrentProjectId() public view returns (uint256[] memory) {
+        return projectsByOwner[msg.sender];
+    }
+
 
     function getProjectDetails() public view returns (Project[] memory) {
         uint256[] memory projectIds = projectsByOwner[msg.sender];

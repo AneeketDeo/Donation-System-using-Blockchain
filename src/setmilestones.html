@@ -229,22 +229,26 @@ input{
     const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
   
     async function setmilestones() {
-        const id = 0;
+        id = 0;
         const m1 = document.getElementById("m1").value;
         const m2 = document.getElementById("m2").value;
         const m3 = document.getElementById("m3").value;
-        console.log(m1, m2, m3);
 
         const milestones = [m1, m2, m3];
         if(m1 == "" && m2 == "" && m3 == ""){
             alert("Please set all milestones");
         }
         else{
+
+          id = localStorage.getItem('projectID');
+          console.log(id);
             web3.eth.getAccounts().then(function(accounts) {
             // get current account's project id
             contractInstance.methods.getCurrentProjectId().call({from: accounts[0]}).then((result) => {;
                 id = result;
                 console.log(result);
+
+                
 
             }).catch((error) => {
                 console.error(error);
@@ -252,13 +256,16 @@ input{
 
             contractInstance.methods.setMilestones(id, milestones).send({from: accounts[0]}).then((result) => {;
 
-                    console.log(result);
-                    console.log("milestones set");
+                console.log(result);
+
+                if(result){
+                    window.location = "ProjectOwner.html";
+                }
+
 
             }).catch((error) => {
                 console.error(error);
             });
-
             
             }).catch(function(error) {
                 console.error(error);

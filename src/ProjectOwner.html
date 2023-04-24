@@ -20,8 +20,7 @@
       text-align: center;
       margin-top: 250px;
     }
-  </style>
-  <style>
+  
     button {
         color: rgb(161, 204, 233);
         margin-right: 30px;
@@ -44,30 +43,60 @@
           margin-top: 10px;
           
         } */
-        /* .container {
-          border-radius: 10px; 
-          block-size: 13cm;
-          background-color: rgb(158, 190, 225);
-          background-position: 700cm; 
-          margin-top: 30px;
-
-        } */
-        .container {
-          overflow-y: scroll;
+        #wet {
+          text-align: center;
         }
+        .container {
+          border-radius: 10px; 
+          block-size:200px;
+          background-color: rgb(158, 190, 225);
+          padding-top: 30px;
+          height: auto;
+          
+          display: inline-block;
+
+        }
+        .row {
+          align-items: center;
+          width:max-content;
+
+        }
+        .col {
+          align-items: center;
+          
+        }
+        .card {
+          width: 18rem; 
+          margin-top: 30px; 
+          
+          overflow-y: scroll;
+          height: 250px;
+          margin: 0 auto;
+          margin-bottom: 20px;
+          
+
+
+        }
+        /* .container {
+          overflow-y: scroll;
+          background-color: rgb(232, 219, 201);
+          max-height: 20cm;
+        } */
         .card-body {
-          background-color: rgb(55, 245, 235);
-          column-width: 200px;
+          
           display: inline-block;
           margin: 30px;
           /* overflow-y: scroll; */
           border-radius: 10px;
           text-align: center;
-          height: auto;
+          padding-top: 0px;
+          
         }
         .h5 {
           text-align: center;
+          
         }
+
         .Description {
           color: brown;
           
@@ -75,11 +104,20 @@
         .card-title {
           font-size: larger;
           font-weight: bolder;
-          padding: top 20px;
+          padding: top 10px;
         }
-        button {
-          margin-bottom: 20px;
-          margin-left: 10px;
+        .card-button {
+          
+          margin-bottom: 10px;
+          margin-top: 10px;
+          padding-left: 30px;
+          display:inline;
+
+          
+        }
+        #btndanger {
+          margin-top: 5px;
+          margin-bottom: 5px;
         }
   </style>
 
@@ -213,17 +251,7 @@
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
   async function get_projects() {
-    // demo
-      // const cardContainer = document.getElementById("wet");
-      // const cardElement = document.createElement("div");
-
-      // cardElement.innerHTML = `
-      //           <h5> Hola Projects here! </h5> {
-          // text-align: center;
-        // }
-      //         `;
-
-      // cardContainer.appendChild(cardElement);
+      id = 0;
       // Fetch card data from the blockchain using web3.js
       web3.eth.getAccounts().then(function(accounts) {
         const cardData = contractInstance.methods.getProjectDetails().call({from: accounts[0]}).then((result) => {;
@@ -243,7 +271,6 @@
             // Loop through the card data and create HTML elements for each card
             for (let i = 0; i < keys.length; i++) {
               // const card = result[i];
-              console.log(typeof card);
 
 
               // Create a new card element
@@ -276,29 +303,37 @@
               // `;
 
               cardElement.innerHTML = `
-              <div class="container">
-                
-                
-                <div class="card-content">
-                <h5 class="card-title">${result[i].title}</h5>
-                <p class="card-text">${result[i].description}</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                <p class="date">${result[i].startDate}</p>
-                <p class="date">${result[i].endDate}</p>
-                <p class="amount">${result[i].amountToRaise}</p>
-                </ul>
-                <ul class="list-group list-group-flush">
-                <p class="date">${result[i].milestones[0]}</p>
-                <p class="date">${result[i].milestones[1]}</p>
-                <p class="date">${result[i].milestones[2]}</p>
-                </ul>
-                <div class="card-button">
-                <button type="button" class="btn btn-success"><a>Know More</a></button>
-                <button type="button" class="btn btn-danger"><a>Abort Project</a></button>
-                <button type="button" class="btn btn-primary"><a href="setmilestones.html">Set Milestones</a></button>
-                </div>
-                </div>
+
+                <div class="container text-center">
+                    <div class="row align-items-start"  >
+                      <h3 style="text-align: center; padding-top: 10px; ;">Project ${i+1} </h3>
+      
+                      <div class="col" > 
+                        <div class="card" style=" ">
+                          <div class="card-body">
+                            <h5 class="card-title">${result[i].title}</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.${result[i].description}</p>
+                          </div>
+                          <ul class="list-group list-group-flush">
+                            <p class="date">${result[i].startDate}</p>
+                            <p class="date">${result[i].endDate}</p>
+                            <p class="amount">${result[i].amountToRaise}</p>
+                          </ul>
+                          <ul class="list-group list-group-flush">
+                          <p class="date">${result[i].milestones[0]}</p>
+                          <p class="date">${result[i].milestones[1]}</p>
+                          <p class="date">${result[i].milestones[2]}</p>
+                          </ul>
+                          <div class="card-button">
+                            <button type="button" class="btn btn-success">Know more</button>
+                            <button type="button" class="btn btn-danger" id="btndanger">Abort Project</button>
+                            <button type="button" id="${i}" class="btn btn-primary"><a href="setmilestones.html">Set Milestones</a></button>
+                          </div>
+                        </div>
+                      </div>
+                     </div>
+                  </div>
+              
               `;  
 
               // // Append the card element to the card container
@@ -309,6 +344,15 @@
               // card.style.backgroundColor = 'white';
               // card.style.borderRadius = '10px';
               // card.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
+
+
+              // pass button id or milestones to setmilestones.html
+              let button = document.getElementById(i);
+              button.addEventListener('click', function() {
+                let projectID = this.id;
+                localStorage.setItem('projectID', projectID);
+              });
+
             }
           }
 
@@ -328,7 +372,7 @@
 <body onload="get_projects()">
   
     <nav class="navbar navbar-expand-lg bg-body-tertiary" style="border-radius: 10px;  padding-top: 10px;">
-        <div class="container-fluid" style ="">
+        <div class="container-fluid" >
             <a class="navbar-brand" href="#">
                 <img src="./img/logo.png" alt="" width="40" height="50" class="d-inline-block align-text-top">
                 
@@ -369,7 +413,7 @@
               </div>
 
               <div id="wet">
-                <h2>demo</h2>
+                <h2>My Projects</h2>
 
               </div>
 
@@ -396,10 +440,10 @@
        
       
             </div>
-            <div class="col-sm-6 px-0 d-none d-sm-block">
+            <!-- <div class="col-sm-6 px-0 d-none d-sm-block">
               <img src="./img/a/landing page.png"
                 alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left; opacity: 0.7;">
-            </div>
+            </div> -->
           </div>
         </div>
       </section>

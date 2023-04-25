@@ -200,6 +200,52 @@
       "constant": true
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "approveProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "rejectProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "isProjectApproved",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
       "inputs": [],
       "name": "getProjectDetails",
       "outputs": [
@@ -234,6 +280,11 @@
               "internalType": "string[]",
               "name": "milestones",
               "type": "string[]"
+            },
+            {
+              "internalType": "bool",
+              "name": "approved",
+              "type": "bool"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -247,7 +298,7 @@
     }
   ];
   
-  const contractAddress = "0xb443F7D431F140F7144087f3Ce2B4BE781EDc7Cb";
+  const contractAddress = "0xAfca7c7Ed0be71723ee97766b847D4005dB60328";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
   async function get_projects() {
@@ -302,6 +353,7 @@
               //   `};
               // `;
 
+              
               cardElement.innerHTML = `
 
                 <div class="container text-center">
@@ -320,14 +372,16 @@
                             <p class="amount">${result[i].amountToRaise}</p>
                           </ul>
                           <ul class="list-group list-group-flush">
-                          <p class="date">${result[i].milestones[0]}</p>
-                          <p class="date">${result[i].milestones[1]}</p>
-                          <p class="date">${result[i].milestones[2]}</p>
+                          <p class="date" id="m1">${result[i].milestones[0] ? result[i].milestones[0] : "Milestones not set"}</p>
+                          <p class="date" id="m2">${result[i].milestones[1] ? result[i].milestones[1] : "Milestones not set"}</p>
+                          <p class="date" id="m3">${result[i].milestones[2] ? result[i].milestones[2] : "Milestones not set"}</p>
                           </ul>
+                          
                           <div class="card-button">
                             <button type="button" class="btn btn-success">Know more</button>
                             <button type="button" class="btn btn-danger" id="btndanger">Abort Project</button>
-                            <button type="button" id="${i}" class="btn btn-primary"><a href="setmilestones.html">Set Milestones</a></button>
+                            <button type="button" id="${i}" class="btn btn-primary" hidden><a href="setmilestones.html">Set Milestones</a></button>
+                            ${result[i].milestones[0] ? '' : `<button type="button" id="${i}" class="btn btn-primary"><a href="setmilestones.html">Set Milestones</a></button>`}
                           </div>
                         </div>
                       </div>
@@ -383,7 +437,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding-left: 20px;">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="">Home</a>
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#" style="margin-left: 10px;">My Projects</a>

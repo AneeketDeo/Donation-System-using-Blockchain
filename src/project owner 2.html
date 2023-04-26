@@ -43,12 +43,38 @@
           margin-top: 10px;
           
         } */
+        #wet {
+          text-align: center;
+        }
         .container {
           border-radius: 10px; 
-          block-size: 7cm;
+          block-size:200px;
           background-color: rgb(158, 190, 225);
           padding-top: 30px;
+          height: auto;
+          
+          display: inline-block;
+
+        }
+        .row {
+          align-items: center;
+          width:max-content;
+
+        }
+        .col {
+          align-items: center;
+          
+        }
+        .card {
+          width: 18rem; 
+          margin-top: 30px; 
+          
           overflow-y: scroll;
+          height: 250px;
+          margin: 0 auto;
+          margin-bottom: 20px;
+          
+
 
         }
         /* .container {
@@ -63,11 +89,14 @@
           /* overflow-y: scroll; */
           border-radius: 10px;
           text-align: center;
+          padding-top: 0px;
           
         }
         .h5 {
           text-align: center;
+          
         }
+
         .Description {
           color: brown;
           
@@ -75,12 +104,20 @@
         .card-title {
           font-size: larger;
           font-weight: bolder;
-          padding: top 20px;
+          padding: top 10px;
         }
-        card-button {
-          margin-bottom: 20px;
-          margin-left: 10px;
-          display:flex;
+        .card-button {
+          
+          margin-bottom: 10px;
+          margin-top: 10px;
+          padding-left: 30px;
+          display:inline;
+
+          
+        }
+        #btndanger {
+          margin-top: 5px;
+          margin-bottom: 5px;
         }
   </style>
 
@@ -131,6 +168,38 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string[]",
+          "name": "_milestones",
+          "type": "string[]"
+        }
+      ],
+      "name": "setMilestones",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getCurrentProjectId",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
       "inputs": [],
       "name": "getProjectDetails",
       "outputs": [
@@ -160,6 +229,11 @@
               "internalType": "uint256",
               "name": "amountToRaise",
               "type": "uint256"
+            },
+            {
+              "internalType": "string[]",
+              "name": "milestones",
+              "type": "string[]"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -171,10 +245,9 @@
       "type": "function",
       "constant": true
     }
-    
   ];
   
-  const contractAddress = "0x342A7D0b90855ABDd1df91f3DeB11302496d1203";
+  const contractAddress = "0xb443F7D431F140F7144087f3Ce2B4BE781EDc7Cb";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
   async function get_projects() {
@@ -241,22 +314,37 @@
               // `;
 
               cardElement.innerHTML = `
-              <div class="container">
-                <div class="card-content">
-                <h5 class="card-title">${result[i].title}</h5>
-                <p class="card-text">${result[i].description}</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                <p class="date">${result[i].startDate}</p>
-                <p class="date">${result[i].endDate}</p>
-                <p class="amount">${result[i].amountToRaise}</p>
-                </ul>
-                <div class="card-button">
-                <button type="button" class="btn btn-success"><a>Know More</a></button>
-                <button type="button" class="btn btn-danger"><a>Abort Project</a></button>
-                <button type="button" class="btn btn-primary"><a>Set Milestones</a></button>
-                </div>
-                </div>
+
+                <div class="container text-center">
+                    <div class="row align-items-start"  >
+                      <h3 style="text-align: center; padding-top: 10px; ;"> My Projects</h3>
+      
+                      <div class="col" > 
+                        <div class="card" style=" ">
+                          <div class="card-body">
+                            <h5 class="card-title">${result[i].title}</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.${result[i].description}</p>
+                          </div>
+                          <ul class="list-group list-group-flush">
+                            <p class="date">${result[i].startDate}</p>
+                            <p class="date">${result[i].endDate}</p>
+                            <p class="amount">${result[i].amountToRaise}</p>
+                          </ul>
+                          <ul class="list-group list-group-flush">
+                          <p class="date">${result[i].milestones[0]}</p>
+                          <p class="date">${result[i].milestones[1]}</p>
+                          <p class="date">${result[i].milestones[2]}</p>
+                          </ul>
+                          <div class="card-button">
+                            <button type="button" class="btn btn-success">Know more</button>
+                            <button type="button" class="btn btn-danger" id="btndanger">Abort Project</button>
+                            <button type="button" class="btn btn-primary"><a>Set Milestones</a></button>
+                          </div>
+                        </div>
+                      </div>
+                     </div>
+                  </div>
+              
               `;  
 
               // // Append the card element to the card container
@@ -354,10 +442,10 @@
        
       
             </div>
-            <div class="col-sm-6 px-0 d-none d-sm-block">
+            <!-- <div class="col-sm-6 px-0 d-none d-sm-block">
               <img src="./img/a/landing page.png"
                 alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left; opacity: 0.7;">
-            </div>
+            </div> -->
           </div>
         </div>
       </section>

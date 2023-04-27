@@ -181,6 +181,52 @@ margin-left: 4px;
       "constant": true
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "approveProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "rejectProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "isProjectApproved",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
       "inputs": [],
       "name": "getProjectDetails",
       "outputs": [
@@ -215,6 +261,11 @@ margin-left: 4px;
               "internalType": "string[]",
               "name": "milestones",
               "type": "string[]"
+            },
+            {
+              "internalType": "bool",
+              "name": "approved",
+              "type": "bool"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -228,7 +279,7 @@ margin-left: 4px;
     }
   ];
         
-        const contractAddress = "0xb443F7D431F140F7144087f3Ce2B4BE781EDc7Cb";
+        const contractAddress = "0xAfca7c7Ed0be71723ee97766b847D4005dB60328";
         const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
     
         function Store_data(){

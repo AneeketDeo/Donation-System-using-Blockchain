@@ -56,6 +56,7 @@ contract ProjectDetails {
         string endDate;
         uint256 amountToRaise;
         string[] milestones;
+        bool approved;
     }
 
     mapping(uint256 => address) private projectOwners;
@@ -65,7 +66,7 @@ contract ProjectDetails {
 
     function createProject(string memory _title, string memory _description, string memory _startDate, string memory _endDate, uint256 _amountToRaise) public {
         uint256 projectId = projects.length;
-        projects.push(Project(_title, _description, _startDate, _endDate, _amountToRaise, new string[](0)));
+        projects.push(Project(_title, _description, _startDate, _endDate, _amountToRaise, new string[](0), false));
         projectOwners[projectId] = msg.sender;
         projectsByOwner[msg.sender].push(projectId);
     }
@@ -77,6 +78,20 @@ contract ProjectDetails {
 
     function getCurrentProjectId() public view returns (uint256[] memory) {
         return projectsByOwner[msg.sender];
+    }
+
+    function approveProject(uint256 _projectId) public {
+        require(projectOwners[_projectId] == msg.sender, "You do not own this project");
+        projects[_projectId].approved = true;
+    }
+
+    function rejectProject(uint256 _projectId) public {
+        require(projectOwners[_projectId] == msg.sender, "You do not own this project");
+        projects[_projectId].approved = false;
+    }
+
+    function isProjectApproved(uint256 _projectId) public view returns (bool) {
+        return projects[_projectId].approved;
     }
 
 

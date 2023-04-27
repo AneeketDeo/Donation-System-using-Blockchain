@@ -290,8 +290,8 @@ input{
             alert("Please set all milestones");
         }
         else{
-          id = localStorage.getItem('projectID');
-          console.log(id);
+            id = localStorage.getItem('projectID');
+            console.log(id);
             web3.eth.getAccounts().then(function(accounts) {
             // get current account's project id
             contractInstance.methods.getCurrentProjectId().call({from: accounts[0]}).then((result) => {;

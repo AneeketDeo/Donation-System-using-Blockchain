@@ -1,0 +1,643 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>projects</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> 
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="css/style.css"> -->
+  <link rel="stylesheet" href="./css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
+  <!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"> --> 
+ 
+</head>
+<body style="background-image: url(./img/a/background.jpg);">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" style="border-radius: 10px;  padding-top: 10px;">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
+
+  <style>
+    button {
+        color: rgb(161, 204, 233);
+        margin-right: 30px;
+    }
+    .navbar-nav {
+        padding-left: 50px;
+    } 
+    body {
+      overflow-y: scroll;
+    }
+    .card {
+            overflow-y: scroll;
+            height: 300px;
+            padding: 1rem;
+            border-radius: 10px;
+
+        }
+        .card-button {
+          margin-top: 10px;
+        }
+  </style>
+
+<script>
+  if (typeof web3 !== 'undefined') {
+    web3 = new Web3(web3.currentProvider);
+    // alert(web3);
+  } else {
+    // set the provider you want from Web3.providers
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+    // alert(web3);
+  }
+
+
+  // contract details for interacting with smart contract
+    const contractAbi =[
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_title",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_description",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_startDate",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_endDate",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amountToRaise",
+          "type": "uint256"
+        }
+      ],
+      "name": "createProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string[]",
+          "name": "_milestones",
+          "type": "string[]"
+        }
+      ],
+      "name": "setMilestones",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getCurrentProjectId",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "approveProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "rejectProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "abortProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "isProjectApproved",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getProjectDetails",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "startDate",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "endDate",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountToRaise",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string[]",
+              "name": "milestones",
+              "type": "string[]"
+            },
+            {
+              "internalType": "bool",
+              "name": "approved",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct ProjectDetails.Project[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getAllProjects",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "startDate",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "endDate",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountToRaise",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string[]",
+              "name": "milestones",
+              "type": "string[]"
+            },
+            {
+              "internalType": "bool",
+              "name": "approved",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct ProjectDetails.Project[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    }
+  ];
+  
+  const contractAddress = "0x9b65122606faA15486D813D136B850854ba651c6";
+  const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
+
+
+  async function get_projects() {
+      id = 0;
+      // Fetch card data from the blockchain using web3.js
+      web3.eth.getAccounts().then(function(accounts) {
+        const cardData = contractInstance.methods.getAllProjects().call({from: accounts[0]}).then((result) => {;
+        console.log(result);
+        if(result.length != 0){
+
+          // hide nothing block
+          document.getElementById("nothing").style.display = "none";
+
+          // Get the card container element
+          const cardContainer = document.getElementById("projects");
+
+          // get keys to calculate objects length
+          const keys = Object.keys(result);
+
+          // Loop through the card data and create HTML elements for each card
+          for (let i = 0; i < keys.length; i++) {
+            // const card = result[i];
+
+
+            // Create a new card element
+            const cardElement = document.createElement("div");
+            cardElement.className = "card"; // Apply CSS class for card styling
+
+            // card body
+            const cardBody = document.createElement("div");
+            cardElement.className = "card-body";
+
+
+            
+            cardElement.innerHTML = `
+              <div class="container text-center">
+                  <div class="row align-items-start"  >
+                    <h3 style="text-align: center; padding-top: 10px; ;"> My Projects</h3>
+
+              <div class="container text-center">
+                  <div class="row align-items-start"  >
+                    <h3 style="text-align: center; padding-top: 10px; ;">Project ${i+1} </h3>
+
+                    <div class="col" > 
+                      <div class="card" style=" ">
+                        <div class="card-body">
+                          <h5 class="card-title">${result[i].title}</h5>
+                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.${result[i].description}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                          <p class="date">${result[i].startDate}</p>
+                          <p class="date">${result[i].endDate}</p>
+                          <p class="amount">${result[i].amountToRaise}</p>
+                        </ul>
+                        <ul class="list-group list-group-flush">
+                        <p class="date" id="m1">${result[i].milestones[0] ? result[i].milestones[0] : "Milestones not set"}</p>
+                        <p class="date" id="m2">${result[i].milestones[1] ? result[i].milestones[1] : "Milestones not set"}</p>
+                        <p class="date" id="m3">${result[i].milestones[2] ? result[i].milestones[2] : "Milestones not set"}</p>
+                        </ul>
+                        
+                        <div class="card-button">
+                          <button type="button" id="${i}" onclick="approve()" class="btn btn-success" hidden>Approve Project</button>
+                          ${result[i].approved ? '' : `<button type="button" id="${i}" class="btn btn-success">Approve Project</button>`}
+                          <button type="button" class="btn btn-danger" id="btndanger">Reject Project</button>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            
+            `;  
+
+            // // Append the card element to the card container
+            // cardElement.appendChild(cardBody);
+            // card.classList.add('card');
+            cardContainer.appendChild(cardElement);
+
+            // card.style.backgroundColor = 'white';
+            // card.style.borderRadius = '10px';
+            // card.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
+
+
+            // pass button id or milestones to setmilestones.html
+            let button = document.getElementById(i);
+            button.addEventListener('click', function() {
+              let projectID = this.id;
+              localStorage.setItem('projectID', projectID);
+              alert(projectID);
+
+              web3.eth.getAccounts().then(function(accounts) {
+              // Do something with the account
+              contractInstance.methods.approveProject(projectID).send({from: accounts[0]}).then((result) => {
+                  console.log(result);
+  
+
+              }).catch((error) => {
+                  console.error(error);
+              });
+
+              contractInstance.methods.isProjectApproved(projectID).call({from: accounts[0]}).then((result) => {
+                  console.log(result);
+  
+
+              }).catch((error) => {
+                  console.error(error);
+              });
+              }).catch(function(error) {
+                  console.error(error);
+              });
+            });
+
+          }
+          }
+
+          else{
+            document.getElementById("nothing").style.display = "block";
+          }
+        }).catch((error) => {
+            console.error(error);
+        });
+      }).catch(function(error) {
+          console.error(error);
+      });
+  }
+  
+</script>
+</head>
+<body onload="get_projects()" style="background-image: url(./img/a/background.jpg);">
+  
+
+  <header>
+    <div class="header-area ">
+      <div class="header-top_area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-6 col-md-12 col-lg-8">
+                    <div class="short_contact_list">
+                        <ul>
+                            <li><a href="#"> <i class="fa fa-phone"></i> +91 9922425315</a></li>
+                            <li id="account"><a href="#"> <i class="fa fa-envelope"></i>ForFunds@gmail.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-lg-4">
+                    <div class="social_media_links d-none d-lg-block">
+                        <a href="#">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-pinterest-p"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div id="sticky-header" class="main-header-area">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-xl-3 col-lg-3">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="img/logo.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-9 col-lg-9">
+                        <div class="main-menu">
+                            <nav>
+                                <ul id="navigation">
+                                    <li><a href="index.html">home</a></li>
+                                    <li><a href="milestones.html">About</a></li>
+                                    <li><a href="set milestones.html">Contact</a></li>
+                                    <!-- Login Button -->
+                                    <li class = "login"><a href="#">Login <i class="ti-angle-down"></i></a>
+                                        <ul class="submenu">
+                                            <li><a href="ProjectLogin.html">Project Owner</a></li>
+                                            <li><a href="BackerLogin.html">Backer</a></li>
+                                            <li onclick="isAdmin()"><a>Admin</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </header>
+  
+
+
+  <!-------------------- PROJECTS ----------------------------->
+  <section class="vh-100">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6 text-black">
+
+          <div id="nothing" class="nocontent">
+            <h2>Sorry!</h2>
+            <h2>No projects found</h2>
+
+          </div>
+
+          <div id="wet">
+            <h2>My Projects</h2>
+
+          </div>
+
+          <!-------------------- PROJECTS ----------------------------->
+          <div class="col" id="projects">
+    
+            <!-- <div class="card"  style="width: 18rem; margin-top: 50px;">
+              
+              <div class="card-body">
+                <h5 class="card-title">Project 3</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <a href="./set milestones.html"></a><li class="list-group-item">milestone not set</li></a>
+                <a href="./set milestones.html"></a><li class="list-group-item">milestone not set</li></a>
+                <a href="./set milestones.html"></a><li class="list-group-item">milestone not set</li></a>
+              </ul>
+              <div class="card-button">
+                <button type="button" class="btn btn-success">Know More</button>
+                <button type="button" class="btn btn-danger">Abort Project</button>
+              </div>
+            </div> -->
+          </div>
+   
+  
+        </div>
+        <!-- <div class="col-sm-6 px-0 d-none d-sm-block">
+          <img src="./img/a/landing page.png"
+            alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left; opacity: 0.7;">
+        </div> -->
+      </div>
+    </div>
+  </section>
+  
+  <!-- <div class="container text-center" style="border-radius: 10px; block-size: 13cm;
+      background-color: rgb(207, 218, 229); background-position: 700cm; margin-top: 30px; " >
+    <div class="row align-items-start" style="padding-left: 50px;">
+      <h3 style="text-align: center; padding-top: 10px; ;">Projects</h3>
+      <div class="hstack gap-3" style="padding-left: 50px; margin-top: 20px;">
+        <div class="bg-body-tertiary border" style="padding-left: 40px; padding-right: 40px; background-color: brown; border-radius: 10px;">Milestones not set</div>
+        <div class="bg-body-tertiary border" style="margin-left: 120px; padding-left: 10px; padding-right: 10px; background-color: green; border-radius: 10px;">Milestones set but not yet aprroved</div>
+        <div class="bg-body-tertiary border" style="margin-left: 100px; padding-left: 40px; padding-right: 40px; background-color: dodgerblue; border-radius: 10px;">project Approved</div>
+      </div> -->
+      <!-- <div class="col" >
+        
+        <div class="card" style="width: 18rem; margin-top: 10px;">
+          
+          <div class="card-body" >
+            <h5 class="card-title">Project 1</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">An item</li>
+            <li class="list-group-item">A second item</li>
+            <li class="list-group-item">A third item</li>
+          </ul>
+          <div class="card-button">
+            <button type="button" class="btn btn-success">Approve</button>
+            <button type="button" class="btn btn-danger">Reject</button>
+          </div>
+        </div>
+      </div>
+     </div>
+  </div>
+      <div class="col">
+        
+        <div class="card" style="width: 18rem; margin-top: 50px;">
+          
+          <div class="card-body">
+            <h5 class="card-title">Project 2</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">An item</li>
+            <li class="list-group-item">A second item</li>
+            <li class="list-group-item">A third item</li>
+          </ul>
+          <div class="card-button">
+            <button type="button" class="btn btn-success">Approve</button>
+            <button type="button" class="btn btn-danger">Reject</button>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        
+        <div class="card" style="width: 18rem; margin-top: 50px;">
+          
+          <div class="card-body">
+            <h5 class="card-title">Project 3</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">An item</li>
+            <li class="list-group-item">A second item</li>
+            <li class="list-group-item">A third item</li>
+          </ul>
+          <div class="card-button">
+            <button type="button" class="btn btn-success">Approve</button>
+            <button type="button" class="btn btn-danger">Reject</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+</body>
+
+</html>

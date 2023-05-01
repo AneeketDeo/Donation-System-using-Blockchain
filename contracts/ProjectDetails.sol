@@ -59,10 +59,16 @@ contract ProjectDetails {
         bool approved;
     }
 
+    address public admin;
+
     mapping(uint256 => address) private projectOwners;
     mapping(address => uint256[]) private projectsByOwner;
 
     Project[] private projects;
+
+    constructor(address _admin) {
+        admin = _admin;
+    }
 
     function createProject(string memory _title, string memory _description, string memory _startDate, string memory _endDate, uint256 _amountToRaise) public {
         uint256 projectId = projects.length;
@@ -81,13 +87,18 @@ contract ProjectDetails {
     }
 
     function approveProject(uint256 _projectId) public {
-        require(projectOwners[_projectId] == msg.sender, "You do not own this project");
+        require(projectOwners[_projectId] == admin, "You do not own this project");
         projects[_projectId].approved = true;
     }
 
     function rejectProject(uint256 _projectId) public {
-        require(projectOwners[_projectId] == msg.sender, "You do not own this project");
+        require(projectOwners[_projectId] == admin, "You do not own this project");
         projects[_projectId].approved = false;
+    }
+
+    function abortProject(uint _index) public {
+        require(projectOwners[_index] == msg.sender, "Only project owner can abort project.");
+        delete projects[_index];
     }
 
     function isProjectApproved(uint256 _projectId) public view returns (bool) {
@@ -105,6 +116,12 @@ contract ProjectDetails {
         }
 
         return result;
+    }
+
+    function getAllProjects() public view returns (Project[] memory) {
+        require(msg.sender == admin, "Only admin can access this method.");
+        
+        return projects;
     }
 }
 

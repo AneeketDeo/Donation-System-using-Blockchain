@@ -56,7 +56,7 @@ contract ProjectDetails {
         string endDate;
         uint256 amountToRaise;
         string[] milestones;
-        bool approved;
+        string approved;
     }
 
     address public admin;
@@ -72,7 +72,7 @@ contract ProjectDetails {
 
     function createProject(string memory _title, string memory _description, string memory _startDate, string memory _endDate, uint256 _amountToRaise) public {
         uint256 projectId = projects.length;
-        projects.push(Project(_title, _description, _startDate, _endDate, _amountToRaise, new string[](0), false));
+        projects.push(Project(_title, _description, _startDate, _endDate, _amountToRaise, new string[](0), "not set"));
         projectOwners[projectId] = msg.sender;
         projectsByOwner[msg.sender].push(projectId);
     }
@@ -87,13 +87,13 @@ contract ProjectDetails {
     }
 
     function approveProject(uint256 _projectId) public {
-        require(projectOwners[_projectId] == admin, "You do not own this project");
-        projects[_projectId].approved = true;
+        require(msg.sender == admin, "You do not have privileges");
+        projects[_projectId].approved = "true";
     }
 
     function rejectProject(uint256 _projectId) public {
-        require(projectOwners[_projectId] == admin, "You do not own this project");
-        projects[_projectId].approved = false;
+        require(msg.sender == admin, "You do not have privileges");
+        projects[_projectId].approved = "false";
     }
 
     function abortProject(uint _index) public {
@@ -101,7 +101,7 @@ contract ProjectDetails {
         delete projects[_index];
     }
 
-    function isProjectApproved(uint256 _projectId) public view returns (bool) {
+    function isProjectApproved(uint256 _projectId) public view returns (string memory) {
         return projects[_projectId].approved;
     }
 

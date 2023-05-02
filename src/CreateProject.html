@@ -255,9 +255,9 @@ margin-left: 4px;
       "name": "isProjectApproved",
       "outputs": [
         {
-          "internalType": "bool",
+          "internalType": "string",
           "name": "",
-          "type": "bool"
+          "type": "string"
         }
       ],
       "stateMutability": "view",
@@ -301,9 +301,9 @@ margin-left: 4px;
               "type": "string[]"
             },
             {
-              "internalType": "bool",
+              "internalType": "string",
               "name": "approved",
-              "type": "bool"
+              "type": "string"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -352,9 +352,9 @@ margin-left: 4px;
               "type": "string[]"
             },
             {
-              "internalType": "bool",
+              "internalType": "string",
               "name": "approved",
-              "type": "bool"
+              "type": "string"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -369,7 +369,7 @@ margin-left: 4px;
   ];
 
         
-        const contractAddress = "0x9b65122606faA15486D813D136B850854ba651c6";
+        const contractAddress = "0xDB64Ec338024B2789F43999d85D369B69Cde2362";
         const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
     
         function Store_data(){

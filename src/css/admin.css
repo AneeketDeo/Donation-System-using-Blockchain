@@ -8,28 +8,49 @@
 body {
   overflow-y: scroll;
 }
-.card {
-        overflow-y: scroll;
-        height: 300px;
-        padding: 1rem;
-        border-radius: 10px;
+button {
+  color: rgb(161, 204, 233);
+  margin-right: 30px;
+}
+.navbar-nav {
+  padding-left: 50px;
+} 
 
-    }
+.card {
+  width: 18rem; 
+  margin-top: 30px; 
+  
+  overflow-y: scroll;
+  height: 250px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
 .card-button {
       margin-top: 10px;
     }
-.container1 {
-      border-radius: 10px;
-      block-size: 13cm;
-      background-color: #ddeaef;
-      position: relative;
-      margin-top: 40px;
+    #wet {
+      text-align: center;
+      margin-top: auto;
+    }
+    .container {
+      border-radius: 10px; 
+      block-size:200px;
+      
+      padding-top: 100px;
+      height: auto;
+      
+      display: inline-block;
+
+    }
+    .row {
+      align-items: center;
+      width:max-content;
+
     }
     .col {
-      position: relative;
-      padding-top: 70px;
+      align-items: center;
+      
     }
-
 
 
 /* line 1, ../../Arafath/CL/january 2020/242. charity/HTML/scss/_header.scss */

@@ -23,60 +23,48 @@ h3 {
   margin-top: 0%;
   
 }
-.card {
-        /* overflow-y: scroll;
-        height: 300px;
-        padding: 1rem;
-        border-radius: 10px;
-        width: 18rem; */
+button {
+  color: rgb(161, 204, 233);
+  margin-right: 30px;
+}
+.navbar-nav {
+  padding-left: 50px;
+} 
 
-        width: 18rem; 
-        margin-top: 30px; 
-        
-        overflow-y: scroll;
-        height: 300px;
-        margin: 0 auto;
-        margin-bottom: 20px;
-    }
-    .row {
-      
-    }
+.card {
+  width: 18rem; 
+  margin-top: 30px; 
+  
+  overflow-y: scroll;
+  height: 250px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
 .card-button {
       margin-top: 10px;
     }
-.container1 {
-      border-radius: 10px;
-      height: auto;
-      overflow-x: hidden;
-      /* background-color: #ddeaef; */
+    #wet {
+      text-align: center;
+      margin-top: auto;
+    }
+    .container {
+      border-radius: 10px; 
+      block-size:200px;
       
-      margin-top: 30px;
-      position: relative; /* Set the position to relative */
-      top: 60px;
-    }
-    .column {
-      align-items: center;
-      margin-top: 50px;
-      padding-inline-start: 80px;
-      padding-inline-end: 50px;
-    }
-    .col {
-      /* position: relative; */
-      padding-top: 50px;
+      padding-top: 100px;
+      height: auto;
+      
       display: inline-block;
-    }
-    .bg-body1-tertiary {
-       background-color: rgb(181, 84, 84); border-radius: 10px;   
-      padding: 10px;
 
     }
-    .bg-body2-tertiary {
-        background-color: rgb(80, 157, 80); border-radius: 10px;
-        padding: 10px;
+    .row {
+      align-items: center;
+      width:max-content;
+
     }
-    .bg-body3-tertiary {
-        background-color: rgb(131, 170, 208); border-radius: 10px;
-        padding: 10px;
+    .col {
+      align-items: center;
+      
     }
 
     .hstack {
@@ -86,12 +74,6 @@ h3 {
       gap: 50px;
       
 
-    }
-
-    footer {
-      padding-top:  40px;
-      height: 5%;
-    }
 /* line 1, ../../Arafath/CL/january 2020/242. charity/HTML/scss/_header.scss */
 /* .header-area {
     left: 0;

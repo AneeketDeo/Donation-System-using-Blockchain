@@ -55,6 +55,7 @@ contract ProjectDetails {
         string startDate;
         string endDate;
         uint256 amountToRaise;
+        uint256 amountRaised;
         string[] milestones;
         string approved;
     }
@@ -72,7 +73,7 @@ contract ProjectDetails {
 
     function createProject(string memory _title, string memory _description, string memory _startDate, string memory _endDate, uint256 _amountToRaise) public {
         uint256 projectId = projects.length;
-        projects.push(Project(_title, _description, _startDate, _endDate, _amountToRaise, new string[](0), "not set"));
+        projects.push(Project(_title, _description, _startDate, _endDate, _amountToRaise, 0, new string[](0), "not set"));
         projectOwners[projectId] = msg.sender;
         projectsByOwner[msg.sender].push(projectId);
     }
@@ -98,11 +99,29 @@ contract ProjectDetails {
 
     function abortProject(uint _index) public {
         require(projectOwners[_index] == msg.sender, "Only project owner can abort project.");
+
+
+        Project storage projectToDelete = projects[_index];
+
+        // Delete the project from the array
         delete projects[_index];
+
+        // Delete the project data from storage
+        delete projectToDelete.title;
+        delete projectToDelete.description;
+        delete projectToDelete.startDate;
+        delete projectToDelete.endDate;
+        delete projectToDelete.amountToRaise;
+        delete projectToDelete.milestones;
     }
 
     function isProjectApproved(uint256 _projectId) public view returns (string memory) {
         return projects[_projectId].approved;
+    }
+
+    function getProject(uint256 projectId) public view returns (Project memory) {
+        require(projectId < projects.length, "Invalid project ID");
+        return projects[projectId];
     }
 
 
@@ -119,7 +138,6 @@ contract ProjectDetails {
     }
 
     function getAllProjects() public view returns (Project[] memory) {
-        require(msg.sender == admin, "Only admin can access this method.");
         
         return projects;
     }

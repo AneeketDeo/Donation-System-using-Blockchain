@@ -180,7 +180,7 @@ contract funding {
         projectDetails.getProject(_projectId).amountRaised += msg.value;
         contributors[msg.sender] += msg.value;
         totalAmountRaised += msg.value;
-        payable(msg.sender).transfer(msg.value);
+        payable(projectDetails.getProjectOwner(_projectId)).transfer(msg.value);
     }
 
     function withdraw() public {

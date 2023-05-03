@@ -124,6 +124,26 @@
           "type": "uint256"
         }
       ],
+      "name": "getProjectOwner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
       "name": "approveProject",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -351,7 +371,7 @@
     }
   ];
   
-  const contractAddress = "0xDCC75D043d19b083Cca4CA9d35FA45C2ae4D9051";
+  const contractAddress = "0x7B510757Dc3153b985e5fd3f639b467eB007B9E1";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
   async function get_projects() {

@@ -165,7 +165,7 @@
     }
   ];
 
-  const contractAddress = "0xee4c1E75E2312110Bd633B03fe76E008315126db";
+  const contractAddress = "0xa697CE4c1aFa3FC3EF77616A8154d3aE82dDdA40";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
     function fund(){
@@ -180,6 +180,7 @@
         console.log(id);
 
         web3.eth.getAccounts().then(function(accounts) {
+            console.log("amount", amount);
             // get current account's project id
             contractInstance.methods.contribute(id).send({from: accounts[0], value: amount}).then((result) => {;
 

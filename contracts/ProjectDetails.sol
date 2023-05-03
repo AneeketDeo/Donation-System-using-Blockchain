@@ -87,6 +87,10 @@ contract ProjectDetails {
         return projectsByOwner[msg.sender];
     }
 
+    function getProjectOwner(uint256 _projectId) public view returns (address) {
+        return projectOwners[_projectId];
+    }
+
     function approveProject(uint256 _projectId) public {
         require(msg.sender == admin, "You do not have privileges");
         projects[_projectId].approved = "true";

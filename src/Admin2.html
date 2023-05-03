@@ -6,21 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>projects</title>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> 
+  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">  -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <!-- <link rel="stylesheet" href="css/style.css"> -->
   <link rel="stylesheet" href="./css/admin.css">
   <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
-  <!-- <link rel="stylesheet" href="css/font-awesome.min.css"> -->
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"> --> 
+  
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">  -->
  
 </head>
-<body style="background-image: url(./img/a/background.jpg);">
-  <nav class="navbar navbar-expand-lg bg-body-tertiary" style="border-radius: 10px;  padding-top: 10px;">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
-
 
 
 <script>
@@ -327,10 +322,10 @@
 
             
             cardElement.innerHTML = `
-              <div class="container text-center">
-                  <div class="row align-items-start">
-                    <div class="col" > 
-                      <div class="card" style=" ">
+              <div class="container1 text-center">
+                  <div class="row1 align-items-start">
+                    <div class="col"  > 
+                      <div class="card1 " >
                         <div class="card-body">
                           <h3 style="text-align: center; padding-top: 10px; ;">Project ${i+1} </h3>
                           <h5 class="card-title">${result[i].title}</h5>
@@ -451,7 +446,6 @@
 </head>
 <body onload="get_projects()" style="background-image: url(./img/a/background.jpg);">
   
-
   <header>
     <div class="header-area ">
       <div class="header-top_area">
@@ -498,23 +492,20 @@
                         <div class="main-menu">
                             <nav>
                                 <ul id="navigation">
-                                    <li><a href="index.html">home</a></li>
-                                    <li><a href="milestones.html">About</a></li>
-                                    <li><a href="set milestones.html">Contact</a></li>
+                                    <li><a href="index.html" target="_blank">home</a></li>
+                                    <!-- <li><a href="milestones.html" target="_blank">About</a></li> -->
+                                    <!-- <li><a href="set milestones.html">Contact</a></li> -->
                                     <!-- Login Button -->
-                                    <li class = "login"><a href="#">Login <i class="ti-angle-down"></i></a>
-                                        <ul class="submenu">
+                                    <li class = "logout"><a href="#" target="_blank">LogOut <i class="ti-angle-down"></i></a>
+                                        <!-- <ul class="submenu">
                                             <li><a href="ProjectLogin.html">Project Owner</a></li>
                                             <li><a href="BackerLogin.html">Backer</a></li>
                                             <li onclick="isAdmin()"><a>Admin</a></li>
-                                        </ul>
+                                        </ul> -->
                                     </li>
                                 </ul>
                             </nav>
                         </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="mobile_menu d-block d-lg-none"></div>
                     </div>
                 </div>
             </div>
@@ -526,8 +517,11 @@
 
   <!-------------------- PROJECTS ----------------------------->
   <section class="vh-100">
-    <div class="container-fluid">
-      <div class="row">
+    <div class="container-fluid1">
+      <div class="row1">
+        <div id="wet" class="col-12 text-center">
+          <h2>Projects</h2>
+        </div>
         <div class="col-sm-6 text-black">
 
           <div id="nothing" class="nocontent">
@@ -536,13 +530,13 @@
 
           </div>
 
-          <div id="wet">
+          <!-- <div id="wet">
             <h2>Projects</h2>
 
-          </div>
+          </div> -->
 
           <!-------------------- PROJECTS ----------------------------->
-          <div class="col" id="projects">
+          <div class="card-container " id="projects">
     
             <!-- <div class="card"  style="width: 18rem; margin-top: 50px;">
               

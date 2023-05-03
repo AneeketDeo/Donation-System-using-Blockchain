@@ -5,121 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>landing page</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="./css/projectowner.css">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"> -->
     <script src="https://cdn.jsdelivr.net/npm/web3@1.3.0/dist/web3.min.js"></script>
-  <style>
-    button {
-        color: rgb(161, 204, 233);
-        margin-right: 30px;
-    }
-    .navbar-nav {
-        padding-left: 50px;
-    } 
-    .nocontent {
-      text-align: center;
-      margin-top: 250px;
-    }
   
-    button {
-        color: rgb(161, 204, 233);
-        margin-right: 30px;
-    }
-    .navbar-nav {
-        padding-left: 50px;
-    } 
-    /* .card {
-            overflow-y: scroll;
-            height: 30px;
-            padding: 1rem;
-            border-radius: 10px;
-            display: inline-block;
-            margin: 10px;
-
-         } */
-        /* .card-button {
-          justify-content: space-between;
-          align-items: center;
-          margin-top: 10px;
-          
-        } */
-        #wet {
-          text-align: center;
-        }
-        .container {
-          border-radius: 10px; 
-          block-size:200px;
-          background-color: rgb(158, 190, 225);
-          padding-top: 30px;
-          height: auto;
-          
-          display: inline-block;
-
-        }
-        .row {
-          align-items: center;
-          width:max-content;
-
-        }
-        .col {
-          align-items: center;
-          
-        }
-        .card {
-          width: 18rem; 
-          margin-top: 30px; 
-          
-          overflow-y: scroll;
-          height: 250px;
-          margin: 0 auto;
-          margin-bottom: 20px;
-          
-
-
-        }
-        /* .container {
-          overflow-y: scroll;
-          background-color: rgb(232, 219, 201);
-          max-height: 20cm;
-        } */
-        .card-body {
-          
-          display: inline-block;
-          margin: 30px;
-          /* overflow-y: scroll; */
-          border-radius: 10px;
-          text-align: center;
-          padding-top: 0px;
-          
-        }
-        .h5 {
-          text-align: center;
-          
-        }
-
-        .Description {
-          color: brown;
-          
-        }
-        .card-title {
-          font-size: larger;
-          font-weight: bolder;
-          padding: top 10px;
-        }
-        .card-button {
-          
-          margin-bottom: 10px;
-          margin-top: 10px;
-          padding-left: 30px;
-          display:inline;
-
-          
-        }
-        #btndanger {
-          margin-top: 5px;
-          margin-bottom: 5px;
-        }
-  </style>
 
 <script>
   if (typeof web3 !== 'undefined') {
@@ -134,6 +26,31 @@
 
   // contract details for interacting with smart contract
     const contractAbi =[
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
     {
       "inputs": [
         {
@@ -200,6 +117,65 @@
       "constant": true
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "approveProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "rejectProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "abortProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "isProjectApproved",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
       "inputs": [],
       "name": "getProjectDetails",
       "outputs": [
@@ -234,6 +210,62 @@
               "internalType": "string[]",
               "name": "milestones",
               "type": "string[]"
+            },
+            {
+              "internalType": "string",
+              "name": "approved",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct ProjectDetails.Project[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getAllProjects",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "startDate",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "endDate",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountToRaise",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string[]",
+              "name": "milestones",
+              "type": "string[]"
+            },
+            {
+              "internalType": "string",
+              "name": "approved",
+              "type": "string"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -247,21 +279,11 @@
     }
   ];
   
-  const contractAddress = "0xb443F7D431F140F7144087f3Ce2B4BE781EDc7Cb";
+  const contractAddress = "0xDB64Ec338024B2789F43999d85D369B69Cde2362";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
   async function get_projects() {
-    // demo
-      // const cardContainer = document.getElementById("wet");
-      // const cardElement = document.createElement("div");
-
-      // cardElement.innerHTML = `
-      //           <h5> Hola Projects here! </h5> {
-          // text-align: center;
-        // }
-      //         `;
-
-      // cardContainer.appendChild(cardElement);
+      id = 0;
       // Fetch card data from the blockchain using web3.js
       web3.eth.getAccounts().then(function(accounts) {
         const cardData = contractInstance.methods.getProjectDetails().call({from: accounts[0]}).then((result) => {;
@@ -281,7 +303,6 @@
             // Loop through the card data and create HTML elements for each card
             for (let i = 0; i < keys.length; i++) {
               // const card = result[i];
-              console.log(typeof card);
 
 
               // Create a new card element
@@ -313,15 +334,14 @@
               //   `};
               // `;
 
+              
               cardElement.innerHTML = `
-
-                <div class="container text-center">
-                    <div class="row align-items-start"  >
-                      <h3 style="text-align: center; padding-top: 10px; ;"> My Projects</h3>
-      
-                      <div class="col" > 
-                        <div class="card" style=" ">
+                <div class="container1 text-center">
+                    <div class="row1 align-items-start"  >
+                      <div class="col1" > 
+                        <div class="card1" >
                           <div class="card-body">
+                            <h3 style="text-align: center; padding-top: 10px; ;">Project ${i+1} </h3>
                             <h5 class="card-title">${result[i].title}</h5>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.${result[i].description}</p>
                           </div>
@@ -331,14 +351,16 @@
                             <p class="amount">${result[i].amountToRaise}</p>
                           </ul>
                           <ul class="list-group list-group-flush">
-                          <p class="date">${result[i].milestones[0]}</p>
-                          <p class="date">${result[i].milestones[1]}</p>
-                          <p class="date">${result[i].milestones[2]}</p>
+                          <p class="date" id="m1">${result[i].milestones[0] ? result[i].milestones[0] : "Milestones not set"}</p>
+                          <p class="date" id="m2">${result[i].milestones[1] ? result[i].milestones[1] : "Milestones not set"}</p>
+                          <p class="date" id="m3">${result[i].milestones[2] ? result[i].milestones[2] : "Milestones not set"}</p>
                           </ul>
+                          
                           <div class="card-button">
                             <button type="button" class="btn btn-success">Know more</button>
                             <button type="button" class="btn btn-danger" id="btndanger">Abort Project</button>
-                            <button type="button" class="btn btn-primary"><a>Set Milestones</a></button>
+                            <button type="button" id="${i}" class="btn btn-primary" hidden><a href="setmilestones.html" >Set Milestones</a></button>
+                            ${result[i].milestones[0] ? '' : `<button type="button" id="${i}" class="btn btn-primary"><a href="setmilestones.html">Set Milestones</a></button>`}
                           </div>
                         </div>
                       </div>
@@ -355,6 +377,16 @@
               // card.style.backgroundColor = 'white';
               // card.style.borderRadius = '10px';
               // card.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
+
+
+              // pass button id or milestones to setmilestones.html
+              let button = document.getElementById(i);
+              button.addEventListener('click', function() {
+                let projectID = this.id;
+                localStorage.setItem('projectID', projectID);
+                alert(projectID);
+              });
+
             }
           }
 
@@ -371,41 +403,83 @@
   
 </script>
 </head>
-<body onload="get_projects()">
+<body onload="get_projects()" >
   
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" style="border-radius: 10px;  padding-top: 10px;">
-        <div class="container-fluid" >
-            <a class="navbar-brand" href="#">
-                <img src="./img/logo.png" alt="" width="40" height="50" class="d-inline-block align-text-top">
-                
-              </a>
-          <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button> -->
-          <div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding-left: 20px;">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" style="margin-left: 10px;">My Projects</a>
-              </li>
-            </ul>
-            <!-- <form class="d-flex" role="search"> -->
-              <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
-              <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
-              <!-- <i class="fab fa-search" aria-hidden="true" style="margin-left: 10px;">Search</i>
-            </form> -->
-            <a href="./CreateProject.html"><button type="button" class="btn " style="margin-inline-start: 200px; background-color:  rgb(171, 206, 236) ; "> Create a Project</button></a>
-            <button type="button" class="btn " style="margin-inline-start: 30px; background-color: rgb(171, 206, 236);">Log out</button>
-          </div>
+  <header>
+    <div class="header-area ">
+      <div class="header-top_area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-6 col-md-12 col-lg-8">
+                    <div class="short_contact_list">
+                        <ul>
+                            <li><a href="#"> <i class="fa fa-phone"></i> +91 9922425315</a></li>
+                            <li id="account"><a href="#"> <i class="fa fa-envelope"></i>ForFunds@gmail.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-lg-4">
+                    <div class="social_media_links d-none d-lg-block">
+                        <a href="#" >
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-pinterest-p"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </nav>
+    </div>
+        <div id="sticky-header" class="main-header-area">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-xl-3 col-lg-3">
+                        <div class="logo">
+                            <a href="index.html">
+                                <img src="img/logo.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-9 col-lg-9">
+                        <div class="main-menu">
+                            <nav>
+                                <ul id="navigation">
+                                    <li><a href="index.html" target="_blank">home</a></li>
+                                    <li><a href="CreateProject.html" target="_blank">Create Project</a></li>
+                                    <!-- <li><a href="set milestones.html">Contact</a></li> -->
+                                    <!-- Login Button -->
+                                    <li class = "logout"><a href="#" target="_blank">LogOut <i class="ti-angle-down"></i></a>
+                                        <!-- <ul class="submenu">
+                                            <li><a href="ProjectLogin.html">Project Owner</a></li>
+                                            <li><a href="BackerLogin.html">Backer</a></li>
+                                            <li onclick="isAdmin()"><a>Admin</a></li>
+                                        </ul> -->
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </header>
 
     <section class="vh-100">
-        <div class="container-fluid">
-          <div class="row">
+        <div class="container-fluid1">
+          <div class="row1">
+            <div id="wet" class="col-12 text-center">
+              <h2>My Projects</h2>
+            </div>
             <div class="col-sm-6 text-black">
+             
       
               <div id="nothing" class="nocontent">
                 <h2>Sorry!</h2>
@@ -414,13 +488,10 @@
                 <a href="./CreateProject.html"><button type="button" id="primary" class="btn btn-primary m-1" >Create a Project</button></a>
               </div>
 
-              <div id="wet">
-                <h2>My Projects</h2>
-
-              </div>
+              
 
               <!-------------------- PROJECTS ----------------------------->
-              <div class="col" id="projects">
+              <div class="card-container" id="projects">
         
                 <!-- <div class="card"  style="width: 18rem; margin-top: 50px;">
                   
@@ -442,7 +513,7 @@
        
       
             </div>
-            <!-- <div class="col-sm-6 px-0 d-none d-sm-block">
+            <!-- <div class="col-sm-1 px-0 d-none d-sm-block">
               <img src="./img/a/landing page.png"
                 alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left; opacity: 0.7;">
             </div> -->

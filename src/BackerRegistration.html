@@ -196,22 +196,14 @@ margin-left: 4px;
             // console.log("inside log");
             web3.eth.getAccounts().then(function(accounts) {
                 console.log("Current account:", accounts[0]);
-                
-                // CONTRACT #1
-                // contractInstance.methods.authorize(accounts[0]).send({from: accounts[0]}).then((result) => {
-                // CONTRACT #2
-                // contractInstance.methods.register(accounts[0], email, pass1).send({from: accounts[0]}).then((result) => {
-                
-                // CONTRACT #4
-                // contractInstance.methods.registerUser(accounts[0], email, pass1).send({from: accounts[0]}).then((result) => {
-                //   console.log("registered", result);
-                // }).catch((error) => {
-                //   console.error(error);
-                // });
     
                 // CONTRACT #5
                 contractInstance.methods.register(email, pass1).send({from: accounts[0]}).then((result) => {
                   console.log("registered", result);
+                  //   if login successful redirect to index and print login successfull
+                  if(result){
+                    window.location = "BackerLogin.html";
+                  }
                 }).catch((error) => {
                   console.error(error);
                 });

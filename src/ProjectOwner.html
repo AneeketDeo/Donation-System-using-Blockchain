@@ -281,6 +281,68 @@
       "constant": true
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProject",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "startDate",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "endDate",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountToRaise",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountRaised",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string[]",
+              "name": "milestones",
+              "type": "string[]"
+            },
+            {
+              "internalType": "string",
+              "name": "approved",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct ProjectDetails.Project",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
       "inputs": [],
       "name": "getProjectDetails",
       "outputs": [
@@ -309,6 +371,11 @@
             {
               "internalType": "uint256",
               "name": "amountToRaise",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountRaised",
               "type": "uint256"
             },
             {
@@ -363,6 +430,11 @@
               "type": "uint256"
             },
             {
+              "internalType": "uint256",
+              "name": "amountRaised",
+              "type": "uint256"
+            },
+            {
               "internalType": "string[]",
               "name": "milestones",
               "type": "string[]"
@@ -384,7 +456,7 @@
     }
   ];
   
-  const contractAddress = "0xDB64Ec338024B2789F43999d85D369B69Cde2362";
+  const contractAddress = "0xDCC75D043d19b083Cca4CA9d35FA45C2ae4D9051";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
   async function get_projects() {
@@ -468,7 +540,7 @@
                           
                           <div class="card-button">
                             <button type="button" class="btn btn-success">Know more</button>
-                            <button type="button" class="btn btn-danger" id="btndanger">Abort Project</button>
+                            <button type="button" class="btn btn-danger" id="${i+100}">Abort Project</button>
                             <button type="button" id="${i}" class="btn btn-primary" hidden><a href="setmilestones.html">Set Milestones</a></button>
                             ${result[i].milestones[0] ? '' : `<button type="button" id="${i}" class="btn btn-primary"><a href="setmilestones.html">Set Milestones</a></button>`}
                           </div>
@@ -496,6 +568,38 @@
                 localStorage.setItem('projectID', projectID);
                 alert(projectID);
               });
+
+              // abort project
+              let button2 = document.getElementById(i+100);
+              if(button2 != null){
+              button2.addEventListener('click', function() {
+              let projectID = this.id - 100;
+              localStorage.setItem('projectID', projectID);
+              alert(projectID);
+
+              web3.eth.getAccounts().then(function(accounts) {
+              // Do something with the account
+              contractInstance.methods.abortProject(projectID).send({from: accounts[0]}).then((result) => {
+                  console.log(result);
+
+                  if(result){
+                    window.location = "ProjectOwner.html";
+                  }
+                  else{
+                    console.log("something went wrong");
+                  }
+  
+
+              }).catch((error) => {
+                  console.error(error);
+              });
+
+
+              }).catch(function(error) {
+                  console.error(error);
+              });
+            });
+            }
 
             }
           }

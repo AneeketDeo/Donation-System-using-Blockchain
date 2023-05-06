@@ -66,8 +66,6 @@ body {
     .row1 {
       align-items: center;
       width:max-content;
-      
-
     }
     .card-container {
       display: grid;

@@ -115,6 +115,31 @@ input{
       {
       "inputs": [
         {
+          "internalType": "address",
+          "name": "_admin",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
           "internalType": "string",
           "name": "_title",
           "type": "string"
@@ -185,6 +210,26 @@ input{
           "type": "uint256"
         }
       ],
+      "name": "getProjectOwner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
       "name": "approveProject",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -207,6 +252,19 @@ input{
       "inputs": [
         {
           "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        }
+      ],
+      "name": "abortProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
           "name": "_projectId",
           "type": "uint256"
         }
@@ -214,9 +272,71 @@ input{
       "name": "isProjectApproved",
       "outputs": [
         {
-          "internalType": "bool",
+          "internalType": "string",
           "name": "",
-          "type": "bool"
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProject",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "startDate",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "endDate",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountToRaise",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountRaised",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string[]",
+              "name": "milestones",
+              "type": "string[]"
+            },
+            {
+              "internalType": "string",
+              "name": "approved",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct ProjectDetails.Project",
+          "name": "",
+          "type": "tuple"
         }
       ],
       "stateMutability": "view",
@@ -255,14 +375,75 @@ input{
               "type": "uint256"
             },
             {
+              "internalType": "uint256",
+              "name": "amountRaised",
+              "type": "uint256"
+            },
+            {
               "internalType": "string[]",
               "name": "milestones",
               "type": "string[]"
             },
             {
-              "internalType": "bool",
+              "internalType": "string",
               "name": "approved",
-              "type": "bool"
+              "type": "string"
+            }
+          ],
+          "internalType": "struct ProjectDetails.Project[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getAllProjects",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "startDate",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "endDate",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountToRaise",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountRaised",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string[]",
+              "name": "milestones",
+              "type": "string[]"
+            },
+            {
+              "internalType": "string",
+              "name": "approved",
+              "type": "string"
             }
           ],
           "internalType": "struct ProjectDetails.Project[]",
@@ -276,7 +457,7 @@ input{
     }
   ];
     
-    const contractAddress = "0xAfca7c7Ed0be71723ee97766b847D4005dB60328";
+    const contractAddress = "0x7B510757Dc3153b985e5fd3f639b467eB007B9E1";
     const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
   
     async function setmilestones() {

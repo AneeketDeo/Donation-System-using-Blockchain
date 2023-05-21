@@ -3,7 +3,8 @@ module.exports = {
     development: {
       host: "127.0.0.1",
       port: 7545,
-      network_id: "*" // Match any network id
+      network_id: "*", // Match any network id
+      networkCheckTimeout: 1000000 // Increase the timeout value as needed
     }
   },
   compilers:{

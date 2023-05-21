@@ -147,6 +147,65 @@ pragma solidity >=0.6.0 < 0.9.0;
 
 
 //---------------------------------CONTRACT #3-------------------------------------//
+// import "./ProjectDetails.sol";
+
+// contract funding {
+
+//     // Project Contract
+//     ProjectDetails projectDetails;
+
+//     address payable public projectOwner;
+//     uint public fundingGoal;
+//     uint public totalAmountRaised;
+//     mapping(address => uint) public contributors;
+//     bool public goalReached;
+
+//     address public admin;
+
+//     // constructor(address payable _projectOwner, uint _fundingGoal, address _admin) {
+//     //     projectOwner = _projectOwner;
+//     //     fundingGoal = _fundingGoal;
+//     //     admin = _admin;
+//     // }
+
+//     constructor(address _admin) {
+//         projectDetails = ProjectDetails(0xDCC75D043d19b083Cca4CA9d35FA45C2ae4D9051);
+//         admin = _admin;
+//     }
+
+
+//     function contribute(uint256 _projectId) public payable {
+//         require(msg.value > 0, "Contribution amount must be greater than 0");
+//         require(msg.value < projectDetails.getProject(_projectId).amountToRaise, "Funding goal already reached");
+//         projectDetails.getProject(_projectId).amountRaised += msg.value;
+//         contributors[msg.sender] += msg.value;
+//         totalAmountRaised += msg.value;
+//         payable(projectDetails.getProjectOwner(_projectId)).transfer(msg.value);
+//     }
+
+//     function withdraw() public {
+//         require(goalReached, "Funding goal not reached");
+//         require(msg.sender == projectOwner, "Only project owner can withdraw funds");
+//         payable(msg.sender).transfer(address(this).balance);
+//     }
+
+//     function checkGoalReached() public {
+//         if (totalAmountRaised >= fundingGoal) {
+//             goalReached = true;
+//         }
+//     }
+
+//     function refund() public {
+//         require(contributors[msg.sender] > 0, "No contribution found for this address");
+//         uint amount = contributors[msg.sender];
+//         contributors[msg.sender] = 0;
+//         totalAmountRaised -= amount;
+//         payable(msg.sender).transfer(amount);
+//     }
+// }
+
+
+//---------------------------------CONTRACT #4-------------------------------------//
 import "./ProjectDetails.sol";
 
 contract funding {
@@ -162,25 +221,48 @@ contract funding {
 
     address public admin;
 
-    // constructor(address payable _projectOwner, uint _fundingGoal, address _admin) {
-    //     projectOwner = _projectOwner;
-    //     fundingGoal = _fundingGoal;
-    //     admin = _admin;
-    // }
-
-    constructor(address _admin) {
-        projectDetails = ProjectDetails(0xDCC75D043d19b083Cca4CA9d35FA45C2ae4D9051);
-        admin = _admin;
+    constructor() {
+        projectDetails = ProjectDetails(0x7B510757Dc3153b985e5fd3f639b467eB007B9E1);
+        // admin = _admin;
     }
+
+    function weiToEther(uint256 weiAmount) public pure returns (uint256) {
+        return weiAmount / 1 ether;
+    }
+
 
 
     function contribute(uint256 _projectId) public payable {
         require(msg.value > 0, "Contribution amount must be greater than 0");
-        require(msg.value < projectDetails.getProject(_projectId).amountToRaise, "Funding goal already reached");
-        projectDetails.getProject(_projectId).amountRaised += msg.value;
-        contributors[msg.sender] += msg.value;
-        totalAmountRaised += msg.value;
-        payable(projectDetails.getProjectOwner(_projectId)).transfer(msg.value);
+
+        uint256 remainingAmount = getToRaised(_projectId) - getProjectAmountRaised(_projectId);
+        uint256 etherAmount = weiToEther(msg.value);
+
+        // CHANGES                                
+        if (etherAmount >= remainingAmount) {
+            // Adjust the contribution amount to the remaining amount required to reach the funding goal
+            // payable(projectDetails.getProjectOwner(_projectId)).transfer(etherAmount - remainingAmount);
+            // projectDetails.addAmountRaised(_projectId, remainingAmount);
+        } else {
+            // projectDetails.addAmountRaised(_projectId, etherAmount);
+            // payable(projectDetails.getProjectOwner(_projectId)).transfer(etherAmount);
+        }
+        
+        
+    }
+
+    // remix
+    function getProjectName(uint256 _projectId) public view returns (string memory) {
+        return projectDetails.getProject(_projectId).title;
+    }
+
+    // remix
+    function getProjectAmountRaised(uint256 _projectId) public view returns (uint256) {
+        return projectDetails.getProject(_projectId).amountRaised;
+    }
+
+    function getToRaised(uint256 _projectId) public view returns (uint256) {
+        return projectDetails.getProject(_projectId).amountToRaise;
     }
 
     function withdraw() public {

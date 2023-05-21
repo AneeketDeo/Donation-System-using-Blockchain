@@ -1,8 +1,8 @@
-var funding = artifacts.require("./funding.sol");
+var demo = artifacts.require("./demo.sol");
 
 
 module.exports = function(deployer) {
-  deployer.deploy(funding);
+  deployer.deploy(demo);
 
 };
 

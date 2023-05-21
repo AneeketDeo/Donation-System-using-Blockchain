@@ -28,71 +28,71 @@
         // contract details for interacting with smart contract
           const contractAbi =[
           {
-            "inputs": [
-              {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-              }
-            ],
-            "name": "users",
-            "outputs": [
-              {
-                "internalType": "bytes32",
-                "name": "",
-                "type": "bytes32"
-              }
-            ],
-            "stateMutability": "view",
-            "type": "function",
-            "constant": true
-          },
-          {
-            "inputs": [
-              {
-                "internalType": "string",
-                "name": "_email",
-                "type": "string"
-              },
-              {
-                "internalType": "string",
-                "name": "_password",
-                "type": "string"
-              }
-            ],
-            "name": "register",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-          },
-          {
-            "inputs": [
-              {
-                "internalType": "string",
-                "name": "_email",
-                "type": "string"
-              },
-              {
-                "internalType": "string",
-                "name": "_password",
-                "type": "string"
-              }
-            ],
-            "name": "login",
-            "outputs": [
-              {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-              }
-            ],
-            "stateMutability": "view",
-            "type": "function",
-            "constant": true
-          }
-        ];
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "users",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_email",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_password",
+          "type": "string"
+        }
+      ],
+      "name": "register",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_email",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_password",
+          "type": "string"
+        }
+      ],
+      "name": "login",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    }
+  ];
         
-        const contractAddress = "0xDFC7e9c109C30558981bf3e5D8a19c3c22EC3F7F";
+        const contractAddress = "0xCAfB29E5Fc33E1B73931e4305920572fC6daAF8E";
         const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
   
         function login(){

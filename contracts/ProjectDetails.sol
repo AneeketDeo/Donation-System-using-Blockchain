@@ -83,12 +83,17 @@ contract ProjectDetails {
         projects[_projectId].milestones = _milestones;
     }
 
+    // function addAmountRaised(uint256 _projectId, uint256 _amountRaised) public {
+    //     // require(projects[_projectId].amountRaised + _amountRaised < projects[_projectId].amountToRaise, "Amount should be less than funding goal");
+    //     projects[_projectId].amountRaised += _amountRaised;
+    // }
+
+    // function getProjectOwner(uint256 _projectId) public view returns (address) {
+    //     return projectOwners[_projectId];
+    // }
+
     function getCurrentProjectId() public view returns (uint256[] memory) {
         return projectsByOwner[msg.sender];
-    }
-
-    function getProjectOwner(uint256 _projectId) public view returns (address) {
-        return projectOwners[_projectId];
     }
 
     function approveProject(uint256 _projectId) public {
@@ -146,4 +151,3 @@ contract ProjectDetails {
         return projects;
     }
 }
-

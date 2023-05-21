@@ -129,6 +129,26 @@
           "type": "uint256"
         }
       ],
+      "name": "getProjectOwner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_projectId",
+          "type": "uint256"
+        }
+      ],
       "name": "approveProject",
       "outputs": [],
       "stateMutability": "nonpayable",
@@ -181,6 +201,68 @@
       "constant": true
     },
     {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProject",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "startDate",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "endDate",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountToRaise",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountRaised",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string[]",
+              "name": "milestones",
+              "type": "string[]"
+            },
+            {
+              "internalType": "string",
+              "name": "approved",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct ProjectDetails.Project",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
       "inputs": [],
       "name": "getProjectDetails",
       "outputs": [
@@ -209,6 +291,11 @@
             {
               "internalType": "uint256",
               "name": "amountToRaise",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountRaised",
               "type": "uint256"
             },
             {
@@ -263,6 +350,11 @@
               "type": "uint256"
             },
             {
+              "internalType": "uint256",
+              "name": "amountRaised",
+              "type": "uint256"
+            },
+            {
               "internalType": "string[]",
               "name": "milestones",
               "type": "string[]"
@@ -284,7 +376,7 @@
     }
   ];
   
-  const contractAddress = "0x9c84865f485CD689cB6a63421d6450E8D058840C";
+  const contractAddress = "0x7B510757Dc3153b985e5fd3f639b467eB007B9E1";
   const contractInstance = new web3.eth.Contract(contractAbi, contractAddress);
 
 
@@ -369,7 +461,7 @@
               button.addEventListener('click', function() {
               let projectID = this.id;
               localStorage.setItem('projectID', projectID);
-              alert(projectID);
+              // alert(projectID);
 
               web3.eth.getAccounts().then(function(accounts) {
               // Do something with the account

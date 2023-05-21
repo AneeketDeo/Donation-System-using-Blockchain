@@ -5,7 +5,6 @@ var AdminLogin = artifacts.require("./AdminLogin.sol");
 
 
 module.exports = function(deployer) {
-  deployer.deploy(funding, 1000,3600);
   deployer.deploy(ProjectOwnerLogin);
   deployer.deploy(BackerLogin);
   deployer.deploy(AdminLogin);

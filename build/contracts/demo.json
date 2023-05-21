@@ -25,7 +25,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -38,7 +39,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getTheInt\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTheInt2\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"newValue\",\"type\":\"uint256\"}],\"name\":\"setTheInt\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/demo.sol\":\"demo\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/demo.sol\":{\"keccak256\":\"0xeb45abf2fcbc974f6d1229aa5be264dd9c5dc192c44b90758972ece72d4d61c0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8bd66f2c72de7626692202af944a15bc7d5f702d45671d2543590f06b5d07a69\",\"dweb:/ipfs/QmRC4P5T3dc3AgkWiWpToZhoHxEyTWDERfhXFDFbGjdCa7\"]}},\"version\":1}",
@@ -1147,12 +1149,13 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x0e2BfE36a2405295EfB0445675F43E642cb674f1",
-      "transactionHash": "0x0a86ef02259cada5419060c2e41177783bbe935cdf1c50bf6ab2a31433661834"
+      "address": "0xE13d423c3C7b4060dA6a63e44022F6369Ab7587e",
+      "transactionHash": "0x9ef1b6350459faaf7ca4eceb122e15236fb62faf338d97d6fad6ed22c200fd0a"
     }
   },
   "schemaVersion": "3.4.10",
-  "updatedAt": "2023-04-17T07:00:41.807Z",
+  "updatedAt": "2023-05-16T07:00:39.806Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},
